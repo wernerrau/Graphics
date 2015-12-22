@@ -5,6 +5,7 @@
 
 <body>
   <canvas height="500" id="myCanvas" width="500"></canvas>
+  <script type="text/javascript" src="ChangingColor.js"></script>
   <script>
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
@@ -19,58 +20,24 @@
     var breedte = canvas.width;
     var straal = Math.min(hoogte,breedte) * 0.7 / 2;
       
-    // cirkel tekenen
-    // ctx.arc(hoogte/2,breedte/2,straal,0,2*Math.PI);
-    // ctx.fillStyle="yellow";
-    // ctx.fill();
+    var changingColor = new ChangingColor();
+
+    setTimeout(tekencirkel, 30, 0, changingColor);
     
-    /*
-    for (var graden=0; graden<360; graden+=20) {
-      var puntX = hoogte/2 + straal * Math.sin(graden * 2 * Math.PI / 360);
-      var puntY = breedte/2 + straal * Math.cos(graden * 2 * Math.PI / 360);
-      ctx.beginPath();
-      ctx.arc(puntX,puntY,straal,0,2*Math.PI);
-      ctx.fillStyle="red";
-      ctx.fill();
-      }
-      */
-    setTimeout(tekencirkel, 30, 0,0,85,170,Math.random(),Math.random(),Math.random());
-    
-    function tekencirkel(graden,rood,groen,blauw,stijgingRood,stijgingGroen,stijgingBlauw) {
+    function tekencirkel(graden,changingColor) {
       var puntX = hoogte/2 + straal * Math.sin(graden * 2 * Math.PI / 360);
       var puntY = breedte/2 + straal * Math.cos(graden * 2 * Math.PI / 360);
       //ctx.clearRect(0, 0, breedte, hoogte);
       ctx.beginPath();
       ctx.arc(puntX,puntY,straal,0,2*Math.PI);
-      rood = rood + stijgingRood;
-      if (rood>=255) {
-        stijgingRood = - stijgingRood;
-      }
-      if (rood<=0) {
-        stijgingRood = -stijgingRood;
-      }
-      groen = groen + stijgingGroen;
-      if (groen>=255) {
-        stijgingGroen = - stijgingGroen;
-      }
-      if (groen<=0) {
-        stijgingGroen = - stijgingGroen;
-      }
-      blauw = blauw + stijgingBlauw
-      if (blauw>=255) {
-        stijgingBlauw = - stijgingBlauw;
-      }
-      if (blauw<=0) {
-        stijgingBlauw = - stijgingBlauw;
-      }
-
-      var kleur ="rgb("+Math.floor(rood)+","+Math.floor(groen)+","+Math.floor(blauw)+")";
+      changingColor.nextColor();
+      var kleur = changingColor.rbgColor();
       // console.log(kleur);
       ctx.fillStyle = kleur;
       ctx.fill();
       graden+=1;
       graden%=360;
-      setTimeout(tekencirkel, 30, graden,rood,groen,blauw,stijgingRood,stijgingGroen,stijgingBlauw);
+      setTimeout(tekencirkel, 30, graden,changingColor);
     }
       
   </script>
