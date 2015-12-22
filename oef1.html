@@ -12,9 +12,11 @@
       
     canvas.style.width ='100%';
     canvas.style.height='100%';
+
+    console.log(canvas.offsetWidth + " " + canvas.offsetHeight)
     
-    canvas.width  = Math.min(canvas.offsetWidth,canvas.offsetHeight);
-    canvas.height = canvas.width;
+    canvas.style.width  = Math.min(canvas.offsetWidth,canvas.offsetHeight);
+    canvas.style.height = canvas.style.width;
     
     var hoogte = canvas.height;
     var breedte = canvas.width;
